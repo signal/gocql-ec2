@@ -7,7 +7,7 @@ type DNS interface {
 	LookupHost(host string) (addrs []string, err error)
 }
 
-type builtinDNS struct {}
+type builtinDNS struct{}
 
 func (d builtinDNS) LookupAddr(addr string) ([]string, error) {
 	return net.LookupAddr(addr)
@@ -16,4 +16,3 @@ func (d builtinDNS) LookupAddr(addr string) ([]string, error) {
 func (d builtinDNS) LookupHost(host string) ([]string, error) {
 	return net.LookupHost(host)
 }
-
