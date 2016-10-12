@@ -19,7 +19,7 @@ connections coming from inside the same network (which they are doing to force y
 
 Configuring `gocql` to use this translator is straight-forward; just configure the `ClusterConfig.AddressTranslator`:
 
-```golang
+```go
 cluster := gocql.NewCluster("node1", "node2")
 cluster.AddressTranslator = gocql_ec2.EC2MultiRegionAddressTranslator()
 // ...
