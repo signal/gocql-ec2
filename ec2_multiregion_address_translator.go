@@ -1,7 +1,7 @@
 package gocql_ec2
 
 import (
-	"github.com/gocql/gocql"
+	"github.com/gus/gocql"
 	"net"
 )
 
