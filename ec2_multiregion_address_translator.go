@@ -9,14 +9,14 @@ import (
 // then do a DNS lookup on the first hostname found in order to potentially get the
 // private IP of the given address. If no results are found in either lookup,
 // the given address is returned. Port is always returned unchanged. Build with the
-// gocql_debug tag to see the address translation at work.
+// gocql_debug tag to see address translation at work.
 func EC2MultiRegionAddressTranslator() gocql.AddressTranslator {
 	return newEC2MultiRegionAddressTranslator(builtinDNS{})
 }
 
 func newEC2MultiRegionAddressTranslator(dns DNS) gocql.AddressTranslator {
-	return gocql.AddressTranslatorFunc(func(addr string, port int) (string, int) {
-		names, err := dns.LookupAddr(addr)
+	return gocql.AddressTranslatorFunc(func(addr net.IP, port int) (net.IP, int) {
+		names, err := dns.LookupAddr(addr.String())
 
 		if err != nil || len(names) < 1 {
 			return addr, port
@@ -32,6 +32,6 @@ func newEC2MultiRegionAddressTranslator(dns DNS) gocql.AddressTranslator {
 			return addr, port
 		}
 
-		return newAddr.String(), port
+		return newAddr, port
 	})
 }

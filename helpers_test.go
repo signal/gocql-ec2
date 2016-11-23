@@ -2,12 +2,24 @@ package gocql_ec2
 
 import (
 	"testing"
+	"net"
+	"fmt"
 )
+
+func assertTrue(t *testing.T, description string, actual bool) {
+	if !actual {
+		t.Errorf("expected %s to be true", description)
+	}
+}
 
 func assertEqual(t *testing.T, description string, expected, actual interface{}) {
 	if expected != actual {
 		t.Errorf("expected %s to be (%+v) but was (%+v) instead", description, expected, actual)
 	}
+}
+
+func assertIPs(t *testing.T, description string, expected, actual net.IP) {
+	assertTrue(t, fmt.Sprintf("%s IP equality (%v => %v)", description, expected, actual), expected.Equal(actual))
 }
 
 // a DNS that you can control
